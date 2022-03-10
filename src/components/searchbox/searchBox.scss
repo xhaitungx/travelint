@@ -1,0 +1,48 @@
+.searchBox {
+  width: 55%;
+  background: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  left: 50;
+  bottom: 0;
+  transform: translateY(50%);
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(32px);
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 32px;
+}
+
+.searchform {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 1rem;
+  .inputField {
+    width: 100%;
+    padding: 20px;
+  }
+  input {
+    border: none;
+    background: transparent;
+    text-align: center;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  .inputNumber-group {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.error {
+  background-color: red;
+  color: white;
+}
+
+.button-search {
+  button {
+    color: red;
+  }
+}

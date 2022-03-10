@@ -1,0 +1,12 @@
+.slider-frame {
+  display: flex !important;
+  align-items: center;
+}
+
+.slide {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0 2rem;
+}

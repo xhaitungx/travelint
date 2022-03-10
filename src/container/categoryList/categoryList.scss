@@ -1,0 +1,25 @@
+.categoryList {
+}
+
+.category {
+  height: 100%;
+  background: #f9fbff;
+}
+
+.category--heading {
+  width: 40%;
+  padding: 1rem 4rem;
+  h1 {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 44px;
+  }
+
+  p {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+
+    color: #aeaeae;
+  }
+}

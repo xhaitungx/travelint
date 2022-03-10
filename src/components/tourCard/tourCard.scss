@@ -1,0 +1,37 @@
+.tourCard--Content {
+  h3 {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+    margin: 1rem 0;
+    color: #313131;
+  }
+
+  p {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #aeaeae;
+  }
+}
+
+.locationBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  h3 {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+
+    color: #aeaeae;
+  }
+
+  span {
+    font-size: 10px;
+    line-height: 14px;
+
+    color: #aeaeae;
+  }
+}

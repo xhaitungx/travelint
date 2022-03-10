@@ -1,0 +1,55 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  color: #aeaeae;
+  list-style: none;
+
+  &:hover {
+    color: black;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: transparent;
+}
+
+button {
+  border: none;
+}
+
+body {
+  //   font-family: ;
+}
+
+.logo {
+  color: black;
+  font-weight: bold;
+  span {
+    color: var(--primary-color);
+  }
+}
+
+.padding-section {
+  padding: 2rem 4rem;
+}
+
+@media screen and (max-width: 1050px) {
+  /* tablet */
+}
+
+@media screen and (max-width: 700px) {
+  /* tablet */
+  .padding-section {
+    padding: 0rem 2rem;
+  }
+  .button--section {
+    button {
+      font-size: 12px;
+    }
+  }
+}
