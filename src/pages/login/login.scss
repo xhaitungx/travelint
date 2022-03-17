@@ -59,5 +59,13 @@
       padding: 0.5rem;
       z-index: 0;
     }
+
+    &:hover {
+      .MuiButton-text {
+        font-size: 18px;
+      }
+      width: 100%;
+      z-index: 0;
+    }
   }
 }

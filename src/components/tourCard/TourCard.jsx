@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 import "./tourCard.scss";
-const TourCard = ({ imageURL, tourData }) => {
+const TourCard = ({ tourData }) => {
   return (
     <Link to="/detail">
       <Card
@@ -41,11 +41,11 @@ const TourCard = ({ imageURL, tourData }) => {
             alt=""
           />
           <div className="tourCard--Content">
-            <h3>{tourData.name}</h3>
+            <h3>{tourData.ten}</h3>
             <p>{tourData.describe}</p>
             <div className="locationBox">
               <h3>Arizona, USA</h3>
-              <h3>150 / person</h3>
+              <h3>{tourData.gia} / person</h3>
             </div>
           </div>
         </CardActionArea>

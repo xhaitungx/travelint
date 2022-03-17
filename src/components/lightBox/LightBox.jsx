@@ -12,11 +12,13 @@ const LightBox = ({ images }) => {
   console.log(currentSlide);
 
   const previousClick = (e) => {
+    e.stopPropagation();
     if (currentSlide == 0) setCurrentSlide(images.length - 1);
     else setCurrentSlide(currentSlide - 1);
   };
 
   const nextClick = (e) => {
+    e.stopPropagation();
     if (currentSlide == images.length - 1) setCurrentSlide(0);
     else setCurrentSlide(currentSlide + 1);
   };
@@ -47,9 +49,15 @@ const LightBox = ({ images }) => {
       </div>
 
       {isOpen && (
-        <div className="lightBox">
+        <div className="lightBox" onClick={() => setIsOpen(false)}>
           <div className="lightBox--content">
-            <img src={images[currentSlide]} style={{ width: "100%" }} />
+            <img
+              src={images[currentSlide]}
+              style={{ width: "100%" }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            />
           </div>
           <Button
             sx={buttonStyle}

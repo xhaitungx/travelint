@@ -1,76 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { TourCard } from "../../components";
 import Cancel from "@mui/icons-material/Cancel";
 import "./cardList.scss";
-const DataToursTest = [
-  {
-    id: "0123",
-    name: "Tokyo",
-    describe: "Thành phố",
-    urlImage: "",
-    type: "mountain",
-    price: 7000000,
-  },
-  {
-    id: "1293",
-    name: "Tokyo",
-    describe: "Thành phố",
-    urlImage: "",
-    type: "mountain",
-    price: 7000000,
-  },
-  {
-    id: "1213",
-    name: "Tokyo",
-    describe: "Thành phố",
-    urlImage: "",
-    price: 7000000,
-    type: "beach",
-  },
-  {
-    id: "1233",
-    name: "e",
-    describe: "Thành phố",
-    urlImage: "",
-    type: "mountain",
-    price: 7000000,
-  },
-  {
-    id: "1283",
-    name: "d",
-    describe: "Thành phố",
-    urlImage: "",
-    price: 7000000,
-    type: "Mountain",
-  },
-  {
-    id: "1723",
-    name: "c",
-    describe: "Thành phố",
-    urlImage: "",
-    type: "Tokyo",
-    price: 7000000,
-  },
-  {
-    id: "1243",
-    name: "b",
-    describe: "Thành phố",
-    urlImage: "",
-    price: 7000000,
-    type: "Beach",
-  },
-  {
-    id: "123",
-    name: "a",
-    describe: "Thành phố",
-    urlImage: "",
-    price: 7000000,
-    type: "Temple",
-  },
-];
+import axios from "axios";
 
 const CardList = ({ DataTours }) => {
+  const [toursData, setToursData] = useState([]);
+
+  const [fetching, setFetching] = useState(true);
+  useEffect(() => {
+    axios
+      .get("https://tour-api-dev.herokuapp.com/tour")
+      .then((res) => res)
+      .then((toursData) => {
+        setToursData(toursData.data);
+        setFetching(false);
+      })
+      .catch((error) => console.log(error));
+  }, []);
   const navigate = useNavigate();
   const [params, setSearchParams] = useSearchParams();
   return (
@@ -86,13 +34,20 @@ const CardList = ({ DataTours }) => {
         <></>
       )}
 
-      <div className="cardList">
-        {DataToursTest.filter((tourData) =>
-          tourData.type?.includes(params.get("category") || "")
-        ).map((tourData) => (
-          <TourCard tourData={tourData} key={tourData.id} />
-        ))}
-      </div>
+      {fetching ? (
+        <h1>Loading</h1>
+      ) : (
+        <div className="cardList">
+          {toursData.map((tourData) => console.log(tourData.ten))}
+          {toursData
+            .filter((tourData) =>
+              tourData.tags?.includes(params.get("category") || "")
+            )
+            .map((tourData) => (
+              <TourCard tourData={tourData} />
+            ))}
+        </div>
+      )}
     </>
   );
 };
