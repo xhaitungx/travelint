@@ -56,6 +56,7 @@ const CategoryList = () => {
       imageURL: require("../../assets/category/sakura.jpg"),
     },
   ];
+
   return (
     <div className="categoryList padding-section">
       <div className="category">

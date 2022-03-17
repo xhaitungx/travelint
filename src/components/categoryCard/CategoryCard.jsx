@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../../pages/home/Context.js";
 import {
   Card,
   CardActionArea,
@@ -10,10 +11,12 @@ import { useNavigate } from "react-router-dom";
 
 const CategoryCard = ({ dataTour }) => {
   const navigate = useNavigate();
-
+  const [tag, setTag] = useContext(Context);
   return (
     <Card
-      onClick={() => navigate(`?category=${dataTour.label}`)}
+      onClick={() => {
+        setTag(dataTour.label);
+      }}
       sx={{
         maxWidth: 125,
         borderRadius: "10px",
@@ -42,7 +45,6 @@ const CategoryCard = ({ dataTour }) => {
           alt=""
         />
         <CardContent>
-          <button onClick={() => navigate(`?category=${dataTour.label}`)} />
           <Typography
             sx={{ fontWeight: 800, fontSize: "16px", lineHeight: "22px" }}
           >
