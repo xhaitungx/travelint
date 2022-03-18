@@ -18,13 +18,14 @@ const CategoryCard = ({ dataTour }) => {
         setTag(dataTour.label);
       }}
       sx={{
-        maxWidth: 125,
+        maxWidth: 100,
         borderRadius: "10px",
         boxShadow: "none",
         background: "#F9FBFF",
       }}
     >
       <CardActionArea
+        className="CardAction"
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -37,7 +38,7 @@ const CategoryCard = ({ dataTour }) => {
           image={dataTour.imageURL}
           sx={{
             width: "100%",
-            height: "195px",
+            height: "175px",
             filter: "drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.2))",
 
             borderRadius: "10px",

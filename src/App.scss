@@ -53,3 +53,15 @@ body {
     }
   }
 }
+
+@media screen and (max-width: 500px) {
+  /* tablet */
+  .padding-section {
+    padding: 0rem 1rem;
+  }
+  .button--section {
+    button {
+      font-size: 12px;
+    }
+  }
+}

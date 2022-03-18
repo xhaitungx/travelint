@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { TourCard } from "../../components";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import Cancel from "@mui/icons-material/Cancel";
 import "./cardList.scss";
 import axios from "axios";
@@ -12,14 +14,14 @@ const CardList = ({ DataTours }) => {
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
-    // axios
-    //   .get("https://tour-api-dev.herokuapp.com/tour")
-    //   .then((res) => res)
-    //   .then((toursData) => {
-    //     setToursData(toursData.data);
-    //     setFetching(false);
-    //   })
-    //   .catch((error) => console.log(error));
+    axios
+      .get("https://tour-api-dev.herokuapp.com/tour")
+      .then((res) => res)
+      .then((toursData) => {
+        setToursData(toursData.data);
+        setFetching(false);
+      })
+      .catch((error) => console.log(error));
   }, []);
   const navigate = useNavigate();
   const [params, setSearchParams] = useSearchParams();
@@ -37,7 +39,12 @@ const CardList = ({ DataTours }) => {
       )}
 
       {fetching ? (
-        <h1>Loading</h1>
+        <div
+          className="loading"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <CircularProgress disableShrink />
+        </div>
       ) : (
         <div className="cardList">
           {toursData
