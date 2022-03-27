@@ -17,18 +17,20 @@ const Payment = () => {
   return (
     <div className="payment padding-section">
       <div className="tour--infor">
-        <img src="https://lp-cms-production.imgix.net/2021-02/Tokyo%20Main.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850" />
-        <div className="tour--infor__detail">
-          <p>Tour:{"Osaka"}</p>
-          <p>Số người:{2}</p>
-          <p>Thời gian:{"12/4"}</p>
+        <div className="tour--infor__container">
+          <img src="https://lp-cms-production.imgix.net/2021-02/Tokyo%20Main.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850" />
+          <div className="tour--infor__detail">
+            <h1>Tour:{"Osaka"}</h1>
+            <h3>Số người:{2}</h3>
+            <h3>Thời gian:{"12/4"}</h3>
+          </div>
         </div>
       </div>
       <div className="payment--form">
         <form onSubmit={formik.handleSubmit}>
           <div className="payment--form__input">
             <div className="row">
-                <TextField
+              <TextField
                 id="email"
                 name="email"
                 label="email"
