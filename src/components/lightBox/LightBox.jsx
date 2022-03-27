@@ -9,7 +9,6 @@ import "./lightBox.scss";
 const LightBox = ({ images }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  console.log(currentSlide);
 
   const previousClick = (e) => {
     e.stopPropagation();

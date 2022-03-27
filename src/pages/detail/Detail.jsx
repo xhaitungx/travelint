@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import LightBox from "../../components/lightBox/LightBox";
-import { Button, TextField } from "@mui/material";
-import { Input } from "@mui/material";
+import { Button } from "@mui/material";
 import DatePicker from "react-datepicker";
+import { getDate, getMonth, getYear } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 
 import calendar from "../../assets/svg/calendar.svg";
 import numberPeople from "../../assets/svg/numberpeople.svg";
-
 import "./detail.scss";
-import SearchBox from "../../components/searchbox/SearchBox";
 const Detail = () => {
+  const [date, setDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState("");
   const [introductionOn, setIntroduction] = useState(true);
   const [numberGuest, setNumberGuest] = useState(0);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -22,6 +23,7 @@ const Detail = () => {
     name: "Snow Forest",
     description: "Taste the cold and beauty of the Russian forest in winter.",
     location: "Camchatka, Russia",
+    date: ["28/3/2022", "29/3/2022", "30/3/2022"],
     images: [
       "https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__480.jpg",
       "http://icdn.dantri.com.vn/zoom/1200_630/2017/hoa-1512436829540.jpg",
@@ -48,8 +50,21 @@ const Detail = () => {
                   Date
                 </label>
                 <DatePicker
-                  wrapperClassName="datePicker"
                   dateFormat="dd/MM/yyyy"
+                  selected={date}
+                  onChange={(date) => {
+                    setDate(date);
+                    const day = getDate(date);
+                    const month = getMonth(date) + 1;
+                    const year = getYear(date);
+                    setSelectedDate(`${day}/${month}/${year}`);
+                  }}
+                  minDate={new Date()}
+                  wrapperClassName="datePicker"
+                  highlightDates={tourData.date.map(
+                    (date) => new Date(date.split("/").reverse().join())
+                  )}
+                  disabledKeyboardNavigation
                 />
               </div>
               <div className="input numberGuest">
@@ -87,6 +102,8 @@ const Detail = () => {
                     </Button>
                   )}
                   <input
+                    id="numberGuest"
+                    name="numberGuest"
                     type="text"
                     value={numberGuest}
                     disabled
@@ -107,18 +124,36 @@ const Detail = () => {
                 </div>
               </div>
             </div>
-            <Button
-              sx={{
-                width: "100%",
-                padding: "1rem 0",
-                boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.15)",
-                borderRadius: "15px ",
-                marginTop: "1rem",
-              }}
-              variant="contained"
-            >
-              Đặt Tour
-            </Button>
+            {tourData.date.includes(selectedDate) && numberGuest ? (
+              <Button
+                type="submit"
+                sx={{
+                  width: "100%",
+                  padding: "1rem 0",
+                  boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.15)",
+                  borderRadius: "15px ",
+                  marginTop: "1rem",
+                }}
+                variant="contained"
+              >
+                Đặt Tour
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                sx={{
+                  width: "100%",
+                  padding: "1rem 0",
+                  boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.15)",
+                  borderRadius: "15px ",
+                  marginTop: "1rem",
+                }}
+                disabled
+                variant="outlined"
+              >
+                Đặt Tour
+              </Button>
+            )}
           </div>
         </div>
       </div>
