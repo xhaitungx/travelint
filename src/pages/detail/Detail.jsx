@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import LightBox from "../../components/lightBox/LightBox";
 import { Button } from "@mui/material";
 import DatePicker from "react-datepicker";
 import { getDate, getMonth, getYear } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
-
+import PeopleIcon from "@mui/icons-material/People";
 import calendar from "../../assets/svg/calendar.svg";
 import numberPeople from "../../assets/svg/numberpeople.svg";
 import "./detail.scss";
@@ -32,11 +33,26 @@ const Detail = () => {
     ],
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const value = {
+      date: selectedDate,
+      number: numberGuest,
+    };
+    navigate("/payment");
+  };
+
+  const navigate = useNavigate();
+
   return (
     <div className="detail padding-section">
       <div className="tour--information">
         <div className="tour--information__lightBox">
-          <LightBox images={tourData.images} />
+          <div className="numberOfTour">
+            <p>3/40</p>
+            {<PeopleIcon />}
+          </div>
+          <LightBox images={tourData.images} number={4} limit={8} />
         </div>
         <div className="tour--information__general">
           <h3>{tourData.name}</h3>
@@ -134,6 +150,7 @@ const Detail = () => {
                   borderRadius: "15px ",
                   marginTop: "1rem",
                 }}
+                onClick={handleSubmit}
                 variant="contained"
               >
                 Đặt Tour
