@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LightBox from "../../components/lightBox/LightBox";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { Input } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,9 +9,10 @@ import calendar from "../../assets/svg/calendar.svg";
 import numberPeople from "../../assets/svg/numberpeople.svg";
 
 import "./detail.scss";
+import SearchBox from "../../components/searchbox/SearchBox";
 const Detail = () => {
   const [introductionOn, setIntroduction] = useState(true);
-
+  const [numberGuest, setNumberGuest] = useState(0);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -46,7 +47,10 @@ const Detail = () => {
                   <img src={calendar} alt="calendar.svg" />
                   Date
                 </label>
-                <Input>Something</Input>
+                <DatePicker
+                  wrapperClassName="datePicker"
+                  dateFormat="dd/MM/yyyy"
+                />
               </div>
               <div className="input numberGuest">
                 <label>
@@ -54,9 +58,52 @@ const Detail = () => {
                   People
                 </label>
                 <div className="numberGuest--input">
-                  <Button>-</Button>
-                  <Input type="text">Thêm người</Input>
-                  <Button>+</Button>
+                  {numberGuest ? (
+                    <Button
+                      onClick={() => setNumberGuest(numberGuest - 1)}
+                      variant="contained"
+                      style={{
+                        maxWidth: "30px",
+                        maxHeight: "30px",
+                        minWidth: "30px",
+                        minHeight: "30px",
+                      }}
+                    >
+                      -
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => setNumberGuest(numberGuest - 1)}
+                      variant="outlined"
+                      style={{
+                        maxWidth: "30px",
+                        maxHeight: "30px",
+                        minWidth: "30px",
+                        minHeight: "30px",
+                      }}
+                      disabled
+                    >
+                      -
+                    </Button>
+                  )}
+                  <input
+                    type="text"
+                    value={numberGuest}
+                    disabled
+                    style={{ textAlign: "center", width: "50px" }}
+                  />
+                  <Button
+                    onClick={() => setNumberGuest(numberGuest + 1)}
+                    variant="contained"
+                    style={{
+                      maxWidth: "30px",
+                      maxHeight: "30px",
+                      minWidth: "30px",
+                      minHeight: "30px",
+                    }}
+                  >
+                    +
+                  </Button>
                 </div>
               </div>
             </div>

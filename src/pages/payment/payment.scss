@@ -1,0 +1,54 @@
+.payment {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.tour--infor {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+
+  img,
+  .tour--infor__detail {
+    padding: 0rem 1rem;
+  }
+
+  img {
+    width: 100%;
+    filter: drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.15));
+    border-radius: 35px;
+    cursor: pointer;
+  }
+
+  .tour--infor__detail {
+    margin-top: 1rem;
+  }
+}
+
+.payment--form {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  .row {
+    width: 100%;
+    display: flex;
+    column-gap: 1rem;
+    input {
+      width: 100%;
+    }
+  }
+
+  .payment--form__input {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+
+  .playment--form__button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+  }
+}
