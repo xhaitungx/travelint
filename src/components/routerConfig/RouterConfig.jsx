@@ -8,11 +8,8 @@ const RouterConfig = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Home" element={<Home />} />
-
         <Route path="Detail" element={<Detail />} />
         <Route path="payment" element={<Payment />} />
-
         <Route path="Login" element={<Login login={true} />} />
         <Route path="Signup" element={<Login login={false} />} />
       </Routes>

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { Menu, Close } from "@mui/icons-material";
 import "./navbar.scss";
 
 const Navbar = (props) => {
   const [menuOn, setMenuOn] = useState(false);
-  const pages = ["Home", "About us", "Contact"];
+  const pages = [
+    { label: "Home", path: "", default: true },
+    { label: "About us", path: "about-us", default: false },
+    { label: "Contact", path: "contact", default: false },
+  ];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
   let navigate = useNavigate();
   function buttonStyle(primaryColor, secondColor) {
@@ -40,17 +44,22 @@ const Navbar = (props) => {
   return (
     <div className="navbar">
       <div className="navbar-container">
-        <Link to="/">
+        <NavLink to="/">
           <h2 className="logo">
             <span>Travel</span>.int
           </h2>
-        </Link>
+        </NavLink>
 
         <ul className="navbar-pages__container">
           {pages.map((item) => (
-            <Link to={`${item}`}>
-              <li>{item}</li>
-            </Link>
+            <NavLink
+              to={`/${item.path}`}
+              className={({ isActive }) =>
+                isActive ? "navLink navLink-active" : "navLink"
+              }
+            >
+              {item.label}
+            </NavLink>
           ))}
         </ul>
 
@@ -75,9 +84,9 @@ const Navbar = (props) => {
               <div className="menu--content">
                 <ul className="menu--navbar-pages__container">
                   {pages.map((item) => (
-                    <Link to={`${item}`} onClick={() => setMenuOn(!menuOn)}>
+                    <NavLink to={`${item}`} onClick={() => setMenuOn(!menuOn)}>
                       <li>{item}</li>
-                    </Link>
+                    </NavLink>
                   ))}
                 </ul>
 
