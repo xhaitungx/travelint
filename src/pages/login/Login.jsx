@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import { Formik } from "formik";
-
 import "./login.scss";
 const Login = ({ login }) => {
-  console.log(login);
-
   const [loginOn, setLoginOn] = useState(login);
   function buttonStyle(primaryColor, secondColor, borderRadius, padding) {
     var obj = {

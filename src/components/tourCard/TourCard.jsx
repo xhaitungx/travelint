@@ -11,7 +11,7 @@ import {
 import "./tourCard.scss";
 const TourCard = ({ tourData }) => {
   return (
-    <Link to="/detail">
+    <Link to={`/detail?slug=${tourData.slug}`}>
       <Card
         sx={{
           maxWidth: 261,
@@ -45,7 +45,7 @@ const TourCard = ({ tourData }) => {
             <p>{tourData.describe}</p>
             <div className="locationBox">
               <h3>Arizona, USA</h3>
-              <h3>{tourData.gia} / person</h3>
+              <h3>{tourData.gia}đ / person</h3>
             </div>
           </div>
         </CardActionArea>

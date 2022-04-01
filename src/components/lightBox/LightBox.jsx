@@ -6,7 +6,7 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import "./lightBox.scss";
 
-const LightBox = ({ images, number, limit }) => {
+const LightBox = ({ images}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
