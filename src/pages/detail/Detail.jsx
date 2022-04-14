@@ -7,17 +7,20 @@ import axios from "axios";
 
 const Detail = () => {
   const [tourData, setTourData] = useState({});
-  console.log("🚀 ~ file: Detail.jsx ~ line 10 ~ Detail ~ tourData", tourData);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchDetailTour();
   }, []);
 
   const fetchDetailTour = () => {
     const slug = searchParams.get("slug");
     axios(`https://tour-api-dev.herokuapp.com/tour/${slug}`)
-      .then(({ data }) => setTourData(data))
+      .then(({ data }) => {
+        document.title = data.ten;
+        setTourData(data);
+      })
       .catch((error) => console.error(error));
   };
 

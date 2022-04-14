@@ -14,6 +14,7 @@ const Home = () => {
   useEffect(() => {
     setFetching(true);
     fetchToursData();
+    tag?document.title = tag:document.title = "Travelint";
   }, [tag]);
 
   const fetchToursData = () => {

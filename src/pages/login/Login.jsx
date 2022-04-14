@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import { Formik } from "formik";
 import "./login.scss";
 const Login = ({ login }) => {
   const [loginOn, setLoginOn] = useState(login);
+
+  useEffect(() => {
+    loginOn ? (document.title = "Đăng nhập") : (document.title = "Đăng ký");
+  });
+
   function buttonStyle(primaryColor, secondColor, borderRadius, padding) {
     var obj = {
       padding: padding,

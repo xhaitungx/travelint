@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import ButtonCustom from "../../components/buttonCustom/ButtonCustom";
 
 const TourDetail = ({ tourData }) => {
-  console.log(
-    "🚀 ~ file: TourDetail.jsx ~ line 5 ~ TourDetail ~ tourData",
-    tourData
-  );
   const [introductionOn, setIntroduction] = useState(true);
 
   const renderIntroduce = () => <></>;
@@ -59,6 +55,7 @@ const TourDetail = ({ tourData }) => {
                   <img
                     src={`https://tour-api-dev.herokuapp.com/${diaDiem.id_dia_diem.hinh}`}
                   />
+                  <div>{diaDiem.id_dia_diem.ten}</div>
                   <div>{diaDiem.dich_vu}</div>
                   <div>{diaDiem.ngay_o} ngày</div>
                 </>
