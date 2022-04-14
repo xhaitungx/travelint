@@ -6,7 +6,8 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import "./lightBox.scss";
 
-const LightBox = ({ images}) => {
+const LightBox = ({ images }) => {
+  console.log("🚀 ~ file: LightBox.jsx ~ line 10 ~ LightBox ~ images", images);
   const [isOpen, setIsOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -34,7 +35,7 @@ const LightBox = ({ images}) => {
   return (
     <div className="lightBox--container">
       <div className="images--container">
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <img
             className={`image-${index}`}
             src={`${image}`}

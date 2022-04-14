@@ -7,7 +7,6 @@ import axios from "axios";
 
 const Detail = () => {
   const [tourData, setTourData] = useState({});
-  console.log("🚀 ~ file: Detail.jsx ~ line 10 ~ Detail ~ tourData", tourData);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
@@ -17,7 +16,9 @@ const Detail = () => {
   const fetchDetailTour = () => {
     const slug = searchParams.get("slug");
     axios(`https://tour-api-dev.herokuapp.com/tour/${slug}`)
-      .then(({ data }) => setTourData(data))
+      .then(({ data }) => {
+        data.map((tour) => setTourData(tour));
+      })
       .catch((error) => console.error(error));
   };
 

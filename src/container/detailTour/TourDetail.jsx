@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import ButtonCustom from "../../components/buttonCustom/ButtonCustom";
 
-const TourDetail = () => {
+const TourDetail = ({ tourData }) => {
+  console.log(
+    "🚀 ~ file: TourDetail.jsx ~ line 5 ~ TourDetail ~ tourData",
+    tourData
+  );
   const [introductionOn, setIntroduction] = useState(true);
+
+  const renderIntroduce = () => <></>;
 
   return (
     <>
@@ -38,7 +44,25 @@ const TourDetail = () => {
         </div>
 
         <div className="content">
-          {introductionOn ? <h1>Giới thiệu chung</h1> : <h1>Lịch trình</h1>}
+          {introductionOn
+            ? tourData.lich_trinh?.map((diaDiem) => (
+                <>
+                  <img
+                    src={`https://tour-api-dev.herokuapp.com/${diaDiem.id_dia_diem.hinh}`}
+                  />
+                  <div>{diaDiem.id_dia_diem.ten}</div>
+                  <div>{diaDiem.id_dia_diem.mo_ta}</div>
+                </>
+              ))
+            : tourData.lich_trinh?.map((diaDiem) => (
+                <>
+                  <img
+                    src={`https://tour-api-dev.herokuapp.com/${diaDiem.id_dia_diem.hinh}`}
+                  />
+                  <div>{diaDiem.dich_vu}</div>
+                  <div>{diaDiem.ngay_o} ngày</div>
+                </>
+              ))}
         </div>
       </div>
     </>

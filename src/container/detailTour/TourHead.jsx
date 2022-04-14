@@ -58,7 +58,7 @@ const TourHead = ({ tourData }) => {
             <p>3/{tourData.so_cho}</p>
             {<PeopleIcon />}
           </div>
-          {/* <LightBox images={tourData.images} /> */}
+          <LightBox images={tourData.hinh} />
         </div>
         <div className="tour--information__general">
           <h3>{tourData.ten}</h3>
