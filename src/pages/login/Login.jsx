@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import { Formik } from "formik";
+import axios from "axios";
 import "./login.scss";
 const Login = ({ login }) => {
   const [loginOn, setLoginOn] = useState(login);
@@ -32,26 +34,74 @@ const Login = ({ login }) => {
     return obj;
   }
 
-  const renderSignupForm = () => (
+  const navigate = useNavigate();
+
+  const createLoginRequest = (values, type) => {
+    const getCustomerID = (accountID) => {
+      axios
+        .get("https://tour-api-dev.herokuapp.com/khachhang")
+        .then(({ data }) => {
+          const customerDataByID = data.filter(
+            (customer) => customer.id_tai_khoan?.["_id"] === accountID
+          );
+          const customerID = customerDataByID.map((item) => item["_id"]);
+          console.log(
+            "🚀 ~ file: Login.jsx ~ line 48 ~ .then ~ customerID",
+            customerID
+          );
+        });
+    };
+
+    axios
+      .get(`https://tour-api-dev.herokuapp.com/taikhoan/${values.email}`)
+      .then(({ data }) => {
+        if (data == null) alert("Tài khoản hoặc mật khẩu không đúng");
+        else {
+          if (data.password === values.password) {
+            getCustomerID(data["_id"]);
+          } else alert("Mật khẩu không đúng");
+          navigate("");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const createRegisterRequest = (values, type) => {
+    axios
+      .post("https://tour-api-dev.herokuapp.com/khachhang", {
+        username: values.email,
+        password: values.password,
+      })
+      .then(() => navigate("/"))
+      .catch((err) => console.log(err));
+  };
+
+  const renderForm = () => (
     <>
       <Formik
         initialValues={{ email: "", password: "" }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.email) {
-            errors.email = "Required";
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = "Invalid email address";
-          }
-          return errors;
-        }}
+        // validate={(values) => {
+        //   const errors = {};
+        //   if (!values.email) {
+        //     errors.email = "Required";
+        //   } else if (
+        //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+        //   ) {
+        //     errors.email = "Invalid email address";
+        //   }
+        //   return errors;
+        // }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+            // alert(JSON.stringify(values, null, 2));
+            // setSubmitting(false);
+            console.log(values.email);
+            console.log(values.password);
+
+            if (loginOn) createLoginRequest(values, "login");
+            else createRegisterRequest(values, "resgister");
+          });
+          setSubmitting(false);
         }}
       >
         {({
@@ -66,7 +116,7 @@ const Login = ({ login }) => {
         }) => (
           <form className="form" onSubmit={handleSubmit}>
             <TextField
-              type="email"
+              type="text"
               name="email"
               variant="standard"
               label="Email"
@@ -74,7 +124,7 @@ const Login = ({ login }) => {
               onBlur={handleBlur}
               value={values.email}
             />
-            {errors.email && touched.email && errors.email}
+            {/* {errors.email && touched.email && errors.email} */}
             <TextField
               type="password"
               name="password"
@@ -97,7 +147,7 @@ const Login = ({ login }) => {
                 },
               }}
             >
-              Đăng ký
+              {loginOn ? "Đăng nhập" : "Đăng ký"}
             </Button>
           </form>
         )}
@@ -105,78 +155,78 @@ const Login = ({ login }) => {
     </>
   );
 
-  const renderLoginForm = () => (
-    <>
-      <Formik
-        initialValues={{ email: "", password: "" }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.email) {
-            errors.email = "Required";
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = "Invalid email address";
-          }
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          /* and other goodies */
-        }) => (
-          <form className="form" onSubmit={handleSubmit}>
-            <TextField
-              type="email"
-              name="email"
-              variant="standard"
-              label="Email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-            />
-            {errors.email && touched.email && errors.email}
-            <TextField
-              type="password"
-              name="password"
-              label="Mật khẩu"
-              variant="standard"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            />
-            {errors.password && touched.password && errors.password}
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              sx={{
-                color: "#fff",
-                background: "#313131",
-                "&:hover": {
-                  color: "#fff",
-                  background: "#313131",
-                },
-              }}
-            >
-              Đăng nhập
-            </Button>
-          </form>
-        )}
-      </Formik>
-    </>
-  );
+  // const renderLoginForm = () => (
+  //   <>
+  //     <Formik
+  //       initialValues={{ email: "", password: "" }}
+  //       validate={(values) => {
+  //         const errors = {};
+  //         if (!values.email) {
+  //           errors.email = "Required";
+  //         } else if (
+  //           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+  //         ) {
+  //           errors.email = "Invalid email address";
+  //         }
+  //         return errors;
+  //       }}
+  //       onSubmit={(values, { setSubmitting }) => {
+  //         setTimeout(() => {
+  //           alert(JSON.stringify(values, null, 2));
+  //           setSubmitting(false);
+  //         }, 400);
+  //       }}
+  //     >
+  //       {({
+  //         values,
+  //         errors,
+  //         touched,
+  //         handleChange,
+  //         handleBlur,
+  //         handleSubmit,
+  //         isSubmitting,
+  //         /* and other goodies */
+  //       }) => (
+  //         <form className="form" onSubmit={handleSubmit}>
+  //           <TextField
+  //             type="email"
+  //             name="email"
+  //             variant="standard"
+  //             label="Email"
+  //             onChange={handleChange}
+  //             onBlur={handleBlur}
+  //             value={values.email}
+  //           />
+  //           {errors.email && touched.email && errors.email}
+  //           <TextField
+  //             type="password"
+  //             name="password"
+  //             label="Mật khẩu"
+  //             variant="standard"
+  //             onChange={handleChange}
+  //             onBlur={handleBlur}
+  //             value={values.password}
+  //           />
+  //           {errors.password && touched.password && errors.password}
+  //           <Button
+  //             type="submit"
+  //             disabled={isSubmitting}
+  //             sx={{
+  //               color: "#fff",
+  //               background: "#313131",
+  //               "&:hover": {
+  //                 color: "#fff",
+  //                 background: "#313131",
+  //               },
+  //             }}
+  //           >
+  //             Đăng nhập
+  //           </Button>
+  //         </form>
+  //       )}
+  //     </Formik>
+  //   </>
+  // );
 
   return (
     <div className="login">
@@ -214,7 +264,7 @@ const Login = ({ login }) => {
             </>
           )}
         </div>
-        {loginOn ? renderLoginForm() : renderSignupForm()}
+        {renderForm()}
       </div>
 
       <div className="authentication--section">

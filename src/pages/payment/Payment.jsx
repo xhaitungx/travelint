@@ -2,6 +2,7 @@ import React from "react";
 
 import { useFormik } from "formik";
 import { Button, TextField } from "@mui/material";
+import axios from "axios";
 import "./payment.scss";
 const Payment = () => {
   const formik = useFormik({
@@ -11,7 +12,8 @@ const Payment = () => {
       address: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
+      axios.post("https://tour-api-dev.herokuapp.com/tour", {});
     },
   });
   return (

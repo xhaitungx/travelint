@@ -152,7 +152,7 @@ const TourHead = ({ tourData }) => {
               ) : (
                 <ButtonCustom
                   type="Submit"
-                  nameString="Đặt Tour"
+                  nameString="Chọn ngày và số người tham gia"
                   variant="contained"
                   style={buttonSubmitStyle}
                   customFunction={handleSubmit}
