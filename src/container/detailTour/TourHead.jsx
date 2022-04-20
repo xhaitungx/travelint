@@ -22,10 +22,10 @@ const TourHead = ({ tourData }) => {
       date: selectedDate,
       number: numberGuest,
     };
-    if (customerID) axios.post("", {});
-    else window.location.href = "/login";
-
-    navigate("/payment");
+    if (customerID) {
+      axios.post("", {});
+      navigate("/payment");
+    } else window.location.href = "/login";
   };
 
   function getImage(dataImage) {

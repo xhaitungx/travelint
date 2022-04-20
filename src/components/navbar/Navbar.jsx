@@ -7,7 +7,6 @@ import "./navbar.scss";
 
 const Navbar = (props) => {
   const customerID = useContext(LoginContext);
-  console.log(customerID);
   const [menuOn, setMenuOn] = useState(false);
   const pages = [
     { label: "Home", path: "", default: true },
@@ -106,8 +105,11 @@ const Navbar = (props) => {
               <div className="menu--content">
                 <ul className="menu--navbar-pages__container">
                   {pages.map((item) => (
-                    <NavLink to={`${item}`} onClick={() => setMenuOn(!menuOn)}>
-                      <li>{item}</li>
+                    <NavLink
+                      to={`${item.path}`}
+                      onClick={() => setMenuOn(!menuOn)}
+                    >
+                      <li>{item.label}</li>
                     </NavLink>
                   ))}
                 </ul>
@@ -133,7 +135,9 @@ const Navbar = (props) => {
                       </Button>
                     </>
                   ) : (
-                    <Button>Log out</Button>
+                    <Button sx={{ width: "100%" }} variant={"text"}>
+                      Log out
+                    </Button>
                   )}
                 </div>
               </div>
