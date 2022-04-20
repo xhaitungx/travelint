@@ -1,8 +1,7 @@
 import React from "react";
-
 import "./header.scss";
 
-import { Navbar, Banner } from "../../components";
+import { Banner } from "../../components";
 const header = () => {
   return (
     <div className="Header">

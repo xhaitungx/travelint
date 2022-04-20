@@ -41,14 +41,11 @@ const Login = ({ login }) => {
       axios
         .get("https://tour-api-dev.herokuapp.com/khachhang")
         .then(({ data }) => {
-          const customerDataByID = data.filter(
+          const Data = data.find(
             (customer) => customer.id_tai_khoan?.["_id"] === accountID
           );
-          const customerID = customerDataByID.map((item) => item["_id"]);
-          console.log(
-            "🚀 ~ file: Login.jsx ~ line 48 ~ .then ~ customerID",
-            customerID
-          );
+          window.sessionStorage.setItem("customerID", Data["_id"]);
+          window.location.href = "http://localhost:3000";
         });
     };
 
@@ -60,7 +57,6 @@ const Login = ({ login }) => {
           if (data.password === values.password) {
             getCustomerID(data["_id"]);
           } else alert("Mật khẩu không đúng");
-          navigate("");
         }
       })
       .catch((err) => console.log(err));

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { LoginContext } from "../../LoginContext";
 import { Button } from "@mui/material";
 import { Menu, Close } from "@mui/icons-material";
 import "./navbar.scss";
 
 const Navbar = (props) => {
+  const customerID = useContext(LoginContext);
+  console.log(customerID);
   const [menuOn, setMenuOn] = useState(false);
   const pages = [
     { label: "Home", path: "", default: true },
@@ -64,19 +67,38 @@ const Navbar = (props) => {
         </ul>
 
         <div className="button-action">
-          <Button
-            sx={buttonStyle("#3075C6", "#fff")}
-            onClick={() => navigate("/Login")}
-          >
-            Login
-          </Button>
-          <Button
-            sx={buttonStyle("#fff", "#3075C6")}
-            onClick={() => navigate("/Signup")}
-          >
-            Sign up
-          </Button>
+          {customerID ? (
+            <Button
+              sx={buttonStyle("#fff", "#3075C6")}
+              onClick={() => {
+                window.sessionStorage.clear();
+                window.location.reload();
+              }}
+            >
+              Log out
+            </Button>
+          ) : (
+            <>
+              <Button
+                sx={buttonStyle("#3075C6", "#fff")}
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                sx={buttonStyle("#fff", "#3075C6")}
+                onClick={() => {
+                  navigate("/signup");
+                }}
+              >
+                Sign up
+              </Button>
+            </>
+          )}
         </div>
+
         <div className="menu">
           {menuOn ? (
             <>
@@ -91,24 +113,28 @@ const Navbar = (props) => {
                 </ul>
 
                 <div className="menu--button-action">
-                  <Button
-                    sx={buttonMenuStyle("#3075C6", "#fff")}
-                    onClick={() => {
-                      navigate("/Login");
-                      setMenuOn(!menuOn);
-                    }}
-                  >
-                    Login
-                  </Button>
-                  <Button
-                    sx={buttonMenuStyle("#fff", "#3075C6")}
-                    onClick={() => {
-                      navigate("/Signup");
-                      setMenuOn(!menuOn);
-                    }}
-                  >
-                    Sign up
-                  </Button>
+                  {customerID ? (
+                    <>
+                      <Button
+                        sx={buttonMenuStyle("#3075C6", "#fff")}
+                        onClick={() => {
+                          navigate("/Login");
+                        }}
+                      >
+                        Login
+                      </Button>
+                      <Button
+                        sx={buttonMenuStyle("#fff", "#3075C6")}
+                        onClick={() => {
+                          navigate("/Signup");
+                        }}
+                      >
+                        Sign up
+                      </Button>
+                    </>
+                  ) : (
+                    <Button>Log out</Button>
+                  )}
                 </div>
               </div>
             </>

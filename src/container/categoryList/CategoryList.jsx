@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from "react";
-
-import { Button } from "@mui/material";
-import { CategoryCard } from "../../components";
+import React from "react";
 
 import "./categoryList.scss";
-import CardList from "../cardList/CardList";
 import Carousel from "../../components/carousel/Carousel";
 
 const CategoryList = () => {
-  const [categoryOpen, setCategoryOpen] = useState(true);
   const listCategory = [
     {
       id: "2",

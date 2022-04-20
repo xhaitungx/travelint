@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
+import React from "react";
 import { TourCard } from "../../components";
 
 import "./cardList.scss";

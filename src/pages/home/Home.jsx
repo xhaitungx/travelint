@@ -11,10 +11,11 @@ const Home = () => {
   const [DataTours, setDataTours] = useState([]);
   const [fetching, setFetching] = useState(true);
 
+
   useEffect(() => {
     setFetching(true);
     fetchToursData();
-    tag?document.title = tag:document.title = "Travelint";
+    tag ? (document.title = tag) : (document.title = "Travelint");
   }, [tag]);
 
   const fetchToursData = () => {
