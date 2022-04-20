@@ -38,7 +38,10 @@ const LightBox = ({ images }) => {
         {images?.map((image, index) => (
           <img
             className={`image-${index}`}
-            src={`${image}`}
+            style={{
+              background: `url(${`tour-api-dev.herokuapp.com${image}`})`,
+            }}
+            style
             data-index={index}
             onClick={(e) => {
               setCurrentSlide(parseInt(e.target.dataset.index));

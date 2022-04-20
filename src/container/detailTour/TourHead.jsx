@@ -6,6 +6,7 @@ import { getDate, getMonth, getYear } from "date-fns";
 import ButtonCustom from "../../components/buttonCustom/ButtonCustom";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@mui/material";
+import { IMuiFbPhotoGridImage, MuiFbPhotoGrid } from "mui-fb-photo-grid";
 import PeopleIcon from "@mui/icons-material/People";
 import { calendar, numberpeople, location } from "../../assets/svg";
 import "./tourHead.scss";
@@ -22,6 +23,20 @@ const TourHead = ({ tourData }) => {
     };
     navigate("/payment");
   };
+
+  function getImage(dataImage) {
+    const imageArray = [];
+    dataImage?.map((imageURL) =>
+      imageArray.push({
+        title: "...", // require
+        img: `http://tour-api-dev.herokuapp.com${imageURL}`, // require
+        imgThumbnail: `http://tour-api-dev.herokuapp.com${imageURL}`, // optional
+      })
+    );
+    return imageArray;
+  }
+
+  const IMAGES = getImage(tourData.hinh);
 
   const buttonUpDownStyle = {
     maxWidth: "30px",
@@ -58,7 +73,11 @@ const TourHead = ({ tourData }) => {
             <p>3/{tourData.so_cho}</p>
             {<PeopleIcon />}
           </div>
-          <LightBox images={tourData.hinh} />
+          <MuiFbPhotoGrid
+            images={IMAGES} // require
+            reactModalStyle={{ overlay: { zIndex: 2000 } }} // optional (https://github.com/reactjs/react-modal#styles)
+          />
+          {/* <LightBox images={tourData.hinh} /> */}
         </div>
         <div className="tour--information__general">
           <h3>{tourData.ten}</h3>
