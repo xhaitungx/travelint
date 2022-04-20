@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import LightBox from "../../components/lightBox/LightBox";
+import React, { useState, useContext } from "react";
+import axios from "axios";
 import DatePicker from "react-datepicker";
+import { LoginContext } from "../../LoginContext";
 import "react-datepicker/dist/react-datepicker.css";
 import { getDate, getMonth, getYear } from "date-fns";
 import ButtonCustom from "../../components/buttonCustom/ButtonCustom";
 import { useNavigate } from "react-router-dom";
-import { Skeleton } from "@mui/material";
-import { IMuiFbPhotoGridImage, MuiFbPhotoGrid } from "mui-fb-photo-grid";
+import { MuiFbPhotoGrid } from "mui-fb-photo-grid";
 import PeopleIcon from "@mui/icons-material/People";
 import { calendar, numberpeople, location } from "../../assets/svg";
 import "./tourHead.scss";
 const TourHead = ({ tourData }) => {
+  const customerID = useContext(LoginContext);
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState("");
   const [numberGuest, setNumberGuest] = useState(0);
@@ -21,6 +22,9 @@ const TourHead = ({ tourData }) => {
       date: selectedDate,
       number: numberGuest,
     };
+    if (customerID) axios.post("", {});
+    else window.location.href = "/login";
+
     navigate("/payment");
   };
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { TextField } from "@mui/material";
 import { Formik } from "formik";
 import axios from "axios";
 import "./login.scss";
 const Login = ({ login }) => {
   const [loginOn, setLoginOn] = useState(login);
-
+  const [isSubmit, setIsSubmit] = useState(false);
   useEffect(() => {
     loginOn ? (document.title = "Đăng nhập") : (document.title = "Đăng ký");
   });
@@ -34,9 +34,7 @@ const Login = ({ login }) => {
     return obj;
   }
 
-  const navigate = useNavigate();
-
-  const createLoginRequest = (values, type) => {
+  const createLoginRequest = (values) => {
     const getCustomerID = (accountID) => {
       axios
         .get("https://tour-api-dev.herokuapp.com/khachhang")
@@ -52,8 +50,10 @@ const Login = ({ login }) => {
     axios
       .get(`https://tour-api-dev.herokuapp.com/taikhoan/${values.email}`)
       .then(({ data }) => {
-        if (data == null) alert("Tài khoản hoặc mật khẩu không đúng");
-        else {
+        if (data == null) {
+          setIsSubmit(false);
+          alert("Tài khoản hoặc mật khẩu không đúng");
+        } else {
           if (data.password === values.password) {
             getCustomerID(data["_id"]);
           } else alert("Mật khẩu không đúng");
@@ -62,13 +62,16 @@ const Login = ({ login }) => {
       .catch((err) => console.log(err));
   };
 
-  const createRegisterRequest = (values, type) => {
+  const createRegisterRequest = (values) => {
     axios
       .post("https://tour-api-dev.herokuapp.com/khachhang", {
         username: values.email,
         password: values.password,
       })
-      .then(() => navigate("/"))
+      .then(() => {
+        window.sessionStorage.setItem("customerID", values.email);
+        window.location.href = "/";
+      })
       .catch((err) => console.log(err));
   };
 
@@ -89,13 +92,9 @@ const Login = ({ login }) => {
         // }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            // alert(JSON.stringify(values, null, 2));
-            // setSubmitting(false);
-            console.log(values.email);
-            console.log(values.password);
-
-            if (loginOn) createLoginRequest(values, "login");
-            else createRegisterRequest(values, "resgister");
+            setIsSubmit(true);
+            if (loginOn) createLoginRequest(values);
+            else createRegisterRequest(values);
           });
           setSubmitting(false);
         }}
@@ -131,98 +130,33 @@ const Login = ({ login }) => {
               value={values.password}
             />
             {errors.password && touched.password && errors.password}
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              sx={{
-                color: "#fff",
-                background: "#313131",
-                "&:hover": {
+            {isSubmit ? (
+              <LoadingButton
+                sx={{ padding: "16px 0" }}
+                loading
+                variant="outlined"
+              ></LoadingButton>
+            ) : (
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                sx={{
                   color: "#fff",
                   background: "#313131",
-                },
-              }}
-            >
-              {loginOn ? "Đăng nhập" : "Đăng ký"}
-            </Button>
+                  "&:hover": {
+                    color: "#fff",
+                    background: "#313131",
+                  },
+                }}
+              >
+                {loginOn ? "Đăng nhập" : "Đăng ký"}
+              </Button>
+            )}
           </form>
         )}
       </Formik>
     </>
   );
-
-  // const renderLoginForm = () => (
-  //   <>
-  //     <Formik
-  //       initialValues={{ email: "", password: "" }}
-  //       validate={(values) => {
-  //         const errors = {};
-  //         if (!values.email) {
-  //           errors.email = "Required";
-  //         } else if (
-  //           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-  //         ) {
-  //           errors.email = "Invalid email address";
-  //         }
-  //         return errors;
-  //       }}
-  //       onSubmit={(values, { setSubmitting }) => {
-  //         setTimeout(() => {
-  //           alert(JSON.stringify(values, null, 2));
-  //           setSubmitting(false);
-  //         }, 400);
-  //       }}
-  //     >
-  //       {({
-  //         values,
-  //         errors,
-  //         touched,
-  //         handleChange,
-  //         handleBlur,
-  //         handleSubmit,
-  //         isSubmitting,
-  //         /* and other goodies */
-  //       }) => (
-  //         <form className="form" onSubmit={handleSubmit}>
-  //           <TextField
-  //             type="email"
-  //             name="email"
-  //             variant="standard"
-  //             label="Email"
-  //             onChange={handleChange}
-  //             onBlur={handleBlur}
-  //             value={values.email}
-  //           />
-  //           {errors.email && touched.email && errors.email}
-  //           <TextField
-  //             type="password"
-  //             name="password"
-  //             label="Mật khẩu"
-  //             variant="standard"
-  //             onChange={handleChange}
-  //             onBlur={handleBlur}
-  //             value={values.password}
-  //           />
-  //           {errors.password && touched.password && errors.password}
-  //           <Button
-  //             type="submit"
-  //             disabled={isSubmitting}
-  //             sx={{
-  //               color: "#fff",
-  //               background: "#313131",
-  //               "&:hover": {
-  //                 color: "#fff",
-  //                 background: "#313131",
-  //               },
-  //             }}
-  //           >
-  //             Đăng nhập
-  //           </Button>
-  //         </form>
-  //       )}
-  //     </Formik>
-  //   </>
-  // );
 
   return (
     <div className="login">
