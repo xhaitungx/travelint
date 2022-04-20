@@ -45,7 +45,7 @@ const Login = ({ login }) => {
             (customer) => customer.id_tai_khoan?.["_id"] === accountID
           );
           window.sessionStorage.setItem("customerID", Data["_id"]);
-          window.location.href = "http://localhost:3000";
+          window.location.href = "happy-mcnulty-9678bb.netlify.app";
         });
     };
 
