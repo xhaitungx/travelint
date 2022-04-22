@@ -11,8 +11,8 @@
 
 .tour--information__lightBox {
   position: relative;
-  flex: 1;
-  height: 360px;
+  flex: 4;
+
   .numberOfTour {
     position: absolute;
     display: flex;
@@ -27,32 +27,8 @@
     padding: 0.5rem 1rem;
   }
 }
-.MuiGrid-item {
-  height: 50%;
-}
-
-.MuiPaper-elevation,
-.MuiGrid-container {
-  height: 100%;
-}
-
-.MuiGrid-item {
-  height: 50% !important;
-}
-
-.css-1idn90j-MuiGrid-root {
-  height: 100% !important;
-  button {
-    height: 100%;
-    img {
-      height: 100%;
-      background-position: center;
-    }
-  }
-}
-
 .tour--information__general {
-  flex: 1;
+  flex: 6;
   h3 {
     font-size: 36px;
     line-height: 49px;
