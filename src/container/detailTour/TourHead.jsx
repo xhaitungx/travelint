@@ -78,6 +78,8 @@ const TourHead = ({ tourData }) => {
             {<PeopleIcon />}
           </div>
           <MuiFbPhotoGrid
+            style={{ height: "250px" }}
+            sx={{ height: "250px" }}
             images={IMAGES} // require
             reactModalStyle={{ overlay: { zIndex: 2000 } }} // optional (https://github.com/reactjs/react-modal#styles)
           />
