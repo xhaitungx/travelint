@@ -2,8 +2,13 @@ import React from "react";
 
 import { useFormik } from "formik";
 import { Button, TextField } from "@mui/material";
-import "./payment.scss";
-const Payment = () => {
+
+import "../payment.scss";
+const UserInfor = () => {
+  const bookTourInfor = JSON.parse(
+    window.localStorage.getItem("bookTourInfor")
+  );
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -11,18 +16,22 @@ const Payment = () => {
       address: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
     },
   });
   return (
     <div className="payment padding-section">
       <div className="tour--infor">
         <div className="tour--infor__container">
-          <img src="https://lp-cms-production.imgix.net/2021-02/Tokyo%20Main.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850" />
+          <img src={`https://tour-api-dev.herokuapp.com${bookTourInfor.img}`} />
           <div className="tour--infor__detail">
-            <h1>Tour:{"Osaka"}</h1>
-            <h3>Số người:{2}</h3>
-            <h3>Thời gian:{"12/4"}</h3>
+            <h1>Tour:{bookTourInfor.name}</h1>
+            <h3>
+              Số người: <span>{bookTourInfor.number}</span>
+            </h3>
+            <h3>
+              Thời gian khởi hành: <span>{bookTourInfor.date}</span>
+            </h3>
           </div>
         </div>
       </div>
@@ -35,6 +44,7 @@ const Payment = () => {
                 name="email"
                 label="email"
                 type="email"
+                sx={{ flex: "1" }}
                 onChange={formik.handleChange}
                 value={formik.values.email}
               />
@@ -43,6 +53,7 @@ const Payment = () => {
                 name="name"
                 label="Họ tên"
                 type="text"
+                sx={{ flex: "1" }}
                 onChange={formik.handleChange}
                 value={formik.values.name}
               />
@@ -73,4 +84,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default UserInfor;

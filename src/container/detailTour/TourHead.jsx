@@ -18,12 +18,32 @@ const TourHead = ({ tourData }) => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    const value = {
+
+    const infor = {
+      id: tourData["_id"],
+      img: tourData.hinh[0],
+      name: tourData.ten,
       date: selectedDate,
       number: numberGuest,
     };
+
+    const bookTourData = {
+      id_khach_hang: "6222c181a3ae8da2e91c87f7",
+      id_tour: "624861e10489641a803bcc0a",
+      giam_gia: "10%",
+      thanh_tien: "1000000",
+      phuong_thuc_tt: "Chia kỳ",
+      ky_thanh_toan: [],
+      trang_thai_duyet: "Chưa duyệt",
+    };
+
     if (customerID) {
-      axios.post("", {});
+      axios
+        .post("https://tour-api-dev.herokuapp.com/thanhtoan", bookTourData)
+        .then((result) => console.log(result))
+        .catch((err) => console.log(err));
+
+      window.localStorage.setItem("bookTourInfor", JSON.stringify(infor));
       navigate("/payment");
     } else window.location.href = "/login";
   };
@@ -180,7 +200,6 @@ const TourHead = ({ tourData }) => {
                   nameString="Chọn ngày và số người tham gia"
                   variant="contained"
                   style={buttonSubmitStyle}
-                  customFunction={handleSubmit}
                   disabled={true}
                 />
               )

@@ -1,13 +1,22 @@
-import React, { useState, useEffect, useContext } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState, useLayoutEffect, useContext } from "react";
+import axios from "axios";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 import { LoginContext } from "../../LoginContext";
 import { Button } from "@mui/material";
 import { Menu, Close } from "@mui/icons-material";
 import "./navbar.scss";
 
 const Navbar = (props) => {
-  const customerID = useContext(LoginContext);
+  const [customerName, setCustomerName] = useState("");
   const [menuOn, setMenuOn] = useState(false);
+  const customerID = useContext(LoginContext);
+  useLayoutEffect(() => {
+    if (customerID)
+      axios(`https://tour-api-dev.herokuapp.com/khachhang/${customerID}`).then(
+        ({ data }) => setCustomerName(data.ho_ten)
+      );
+  }, []);
+
   const pages = [
     { label: "Home", path: "", default: true },
     { label: "About us", path: "about-us", default: false },
@@ -67,15 +76,23 @@ const Navbar = (props) => {
 
         <div className="button-action">
           {customerID ? (
-            <Button
-              sx={buttonStyle("#fff", "#3075C6")}
-              onClick={() => {
-                window.sessionStorage.clear();
-                window.location.reload();
-              }}
-            >
-              Log out
-            </Button>
+            <>
+              <Link to="/customer">
+                <Button variant="contained">
+                  Tài khoản <br />
+                  {customerName}
+                </Button>
+              </Link>
+              <Button
+                sx={buttonStyle("#fff", "#3075C6")}
+                onClick={() => {
+                  window.sessionStorage.clear();
+                  window.location.reload();
+                }}
+              >
+                Log out
+              </Button>
+            </>
           ) : (
             <>
               <Button

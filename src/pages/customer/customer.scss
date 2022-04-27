@@ -1,0 +1,18 @@
+.customer--sideBar__Container {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemNavBar {
+  color: black;
+  padding: 1rem 2rem;
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgb(235, 235, 240);
+  }
+
+  &.itemNavBar--active {
+    background-color: rgb(235, 235, 240);
+  }
+}

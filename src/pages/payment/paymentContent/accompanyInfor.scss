@@ -1,0 +1,13 @@
+.AccompanyInfor {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+.accompany--input {
+  display: Flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
