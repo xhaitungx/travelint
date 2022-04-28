@@ -3,6 +3,7 @@ import axios from "axios";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import { LoginContext } from "../../LoginContext";
 import { Button } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Menu, Close } from "@mui/icons-material";
 import "./navbar.scss";
 
@@ -55,7 +56,7 @@ const Navbar = (props) => {
   return (
     <div className="navbar">
       <div className="navbar-container">
-        <NavLink to="/">
+        <NavLink to="/" className="logo">
           <h2 className="logo">
             <span>Travel</span>.int
           </h2>
@@ -79,7 +80,7 @@ const Navbar = (props) => {
             <>
               <Link to="/customer">
                 <Button variant="contained">
-                  Tài khoản <br />
+                  <AccountCircleIcon sx={{ marginRight: "2px" }} />
                   {customerName}
                 </Button>
               </Link>

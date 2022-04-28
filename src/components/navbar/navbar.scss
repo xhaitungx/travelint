@@ -7,6 +7,10 @@
   align-items: center;
 }
 
+.logo {
+  flex: 1;
+}
+
 .navbar-pages {
 }
 .navbar-pages__container {
@@ -33,6 +37,9 @@
 }
 
 .button-action {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
   .btn {
     font-weight: bold;
     font-size: 16px;

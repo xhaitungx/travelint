@@ -23,15 +23,16 @@ const TourHead = ({ tourData }) => {
       id: tourData["_id"],
       img: tourData.hinh[0],
       name: tourData.ten,
+      gia: tourData.gia,
       date: selectedDate,
       number: numberGuest,
     };
 
     const bookTourData = {
-      id_khach_hang: "6222c181a3ae8da2e91c87f7",
-      id_tour: "624861e10489641a803bcc0a",
+      id_khach_hang: customerID,
+      id_tour: tourData["_id"],
       giam_gia: "10%",
-      thanh_tien: "1000000",
+      thanh_tien: tourData.gia,
       phuong_thuc_tt: "Chia kỳ",
       ky_thanh_toan: [],
       trang_thai_duyet: "Chưa duyệt",

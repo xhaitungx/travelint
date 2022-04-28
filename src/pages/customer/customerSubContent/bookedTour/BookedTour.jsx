@@ -8,7 +8,7 @@ const BookedTour = () => {
 
   useEffect(() => {
     axios(`https://tour-api-dev.herokuapp.com/khachhang/${customerID}`).then(
-      ({ data }) => setCustomerJoinedTour(data.tour_tg)
+      ({ data }) => setCustomerJoinedTour(data.tours_da_dat)
     );
   }, []);
 
@@ -33,7 +33,7 @@ const BookedTour = () => {
     <>
       <p>Tour đã đặt</p>
       <div className="customer--tour__Container">
-        {customerJoinedTour.map((tour) => renderTour(tour))}
+        {customerJoinedTour?.map((tour) => renderTour(tour))}
       </div>
     </>
   );
