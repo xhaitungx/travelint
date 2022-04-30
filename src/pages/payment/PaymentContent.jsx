@@ -13,7 +13,7 @@ const PaymentContent = () => {
   const [activedStep, setActivedStep] = useState(0);
 
   const [customerData, setCustomerData] = useState({});
-  console.log(customerData);
+
   useEffect(() => {
     const customerID = window.sessionStorage.getItem("customerID");
     axios(`https://tour-api-dev.herokuapp.com/khachhang/${customerID}`).then(
@@ -33,8 +33,29 @@ const PaymentContent = () => {
     setActivedStep(index);
   };
 
+  const tourData = JSON.parse(localStorage.getItem("bookTourInfor"));
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const patchDuKhachTour = (idDuKhaches) => {
+      console.log([
+        ...[...tourData.du_khach].map((item) => item["_id"]),
+        ...idDuKhaches,
+      ]);
+      axios
+        .patch(`https://tour-api-dev.herokuapp.com/tour/${tourData.id}`, {
+          du_khach: [
+            ...[...tourData.du_khach].map((item) => item["_id"]),
+            ...idDuKhaches,
+          ],
+        })
+        .then((result) => console.log(result))
+        .catch((err) => console.log(err));
+    };
+    axios
+      .post(`https://tour-api-dev.herokuapp.com/dukhach`, accompanyData)
+      .then(({ data }) => patchDuKhachTour(data))
+      .catch((err) => console.log(err));
   };
 
   //User data
@@ -45,8 +66,8 @@ const PaymentContent = () => {
   const accompanyData = [];
   Array.from({ length: numberGuest }, (item, index) => {
     accompanyData.push({
-      name: "",
-      number: "",
+      ho_ten: "",
+      sdt: "",
     });
   });
 

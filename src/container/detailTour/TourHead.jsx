@@ -26,6 +26,7 @@ const TourHead = ({ tourData }) => {
       gia: tourData.gia,
       date: selectedDate,
       number: numberGuest,
+      du_khach: tourData.du_khach,
     };
 
     const bookTourData = {
@@ -41,7 +42,6 @@ const TourHead = ({ tourData }) => {
     if (customerID) {
       axios
         .post("https://tour-api-dev.herokuapp.com/thanhtoan", bookTourData)
-        .then((result) => console.log(result))
         .catch((err) => console.log(err));
 
       window.localStorage.setItem("bookTourInfor", JSON.stringify(infor));

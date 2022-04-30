@@ -10,12 +10,12 @@ const AccompanyInfor = ({
 }) => {
   const handleChangeName = (e) => {
     const index = e.target.dataset.index;
-    data[index].name = e.target.value;
+    data[index].ho_ten = e.target.value;
   };
 
   const handleChangePhone = (e) => {
     const index = e.target.dataset.index;
-    data[index].number = e.target.value;
+    data[index].sdt = e.target.value;
   };
 
   const renderFormAccompany = () => {

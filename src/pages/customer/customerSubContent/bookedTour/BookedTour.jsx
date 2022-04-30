@@ -3,13 +3,16 @@ import axios from "axios";
 import { LoginContext } from "../../../../LoginContext";
 const BookedTour = () => {
   const [customerJoinedTour, setCustomerJoinedTour] = useState([]);
-  console.log(customerJoinedTour);
   const customerID = useContext(LoginContext);
 
   useEffect(() => {
-    axios(`https://tour-api-dev.herokuapp.com/khachhang/${customerID}`).then(
-      ({ data }) => setCustomerJoinedTour(data.tours_da_dat)
-    );
+    axios(`https://tour-api-dev.herokuapp.com/thanhtoan`).then(({ data }) => {
+      const filterData = data.filter(
+        (bookedTour) => bookedTour.id_khach_hang["_id"] === customerID
+      );
+      console.log(filterData);
+      setCustomerJoinedTour(filterData);
+    });
   }, []);
 
   const renderTour = (tour) => (
@@ -17,16 +20,17 @@ const BookedTour = () => {
       className="tour--item"
       style={{ display: "flex", gap: "2rem", marginBottom: "3rem" }}
     >
-      <img
+      {/* <img
         src={`http://tour-api-dev.herokuapp.com${tour.hinh[0]}`}
         style={{ width: "20%" }}
-      />
+      /> */}
       <div style={{ width: "50%" }}>
-        <h3>Tên tour: {tour.ten}</h3>
-        <h3>Ngày khởi hành: {tour.khoi_hanh}</h3>
+        <h3>Tên tour: {tour.id_tour.ten}</h3>
+        <h3>Ngày khởi hành: {tour.id_tour.khoi_hanh}</h3>
       </div>
 
-      <h3 style={{ width: "10%" }}>{tour.gia}đ</h3>
+      <h3 style={{ width: "10%" }}>{tour.thanh_tien}đ</h3>
+      <h3 style={{ width: "10%" }}>{tour.trang_thai_duyet}</h3>
     </div>
   );
   return (
