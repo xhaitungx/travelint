@@ -15,6 +15,11 @@ const BookedTour = () => {
     });
   }, []);
 
+  const getDate = (date) => {
+    const temp = new Date(date);
+    return `${temp.getDate()}/${temp.getMonth() + 1}/${temp.getFullYear()}`;
+  };
+
   const renderTour = (tour) => (
     <div
       className="tour--item"
@@ -27,6 +32,7 @@ const BookedTour = () => {
       <div style={{ width: "50%" }}>
         <h3>Tên tour: {tour.id_tour.ten}</h3>
         <h3>Ngày khởi hành: {tour.id_tour.khoi_hanh}</h3>
+        <h3>Ngày đặt tour: {getDate(tour.createdAt)}</h3>
       </div>
 
       <h3 style={{ width: "10%" }}>{tour.thanh_tien}đ</h3>
@@ -37,7 +43,10 @@ const BookedTour = () => {
     <>
       <p>Tour đã đặt</p>
       <div className="customer--tour__Container">
-        {customerJoinedTour?.map((tour) => renderTour(tour))}
+        {customerJoinedTour
+          ?.slice(0)
+          .reverse()
+          .map((tour) => renderTour(tour))}
       </div>
     </>
   );

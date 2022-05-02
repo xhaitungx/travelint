@@ -13,13 +13,31 @@ const PaymentContent = () => {
   const [activedStep, setActivedStep] = useState(0);
 
   const [customerData, setCustomerData] = useState({});
-
+  const [accompanyData, setAccompanyData] = useState([]);
   useEffect(() => {
     const customerID = window.sessionStorage.getItem("customerID");
     axios(`https://tour-api-dev.herokuapp.com/khachhang/${customerID}`).then(
       ({ data }) => setCustomerData(data)
     );
   }, []);
+
+  useEffect(() => {
+    //  Create accompany array
+    const arrayTemp = [];
+    Array.from({ length: numberGuest }, (item, index) => {
+      if (index === 0)
+        arrayTemp.push({
+          ho_ten: customerData.ho_ten,
+          sdt: customerData.sdt,
+        });
+      else
+        arrayTemp.push({
+          ho_ten: "",
+          sdt: "",
+        });
+    });
+    setAccompanyData(arrayTemp);
+  }, [customerData]);
 
   const handleButtonBack = () => {
     setActivedStep(activedStep - 1);
@@ -38,10 +56,6 @@ const PaymentContent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const patchDuKhachTour = (idDuKhaches) => {
-      console.log([
-        ...[...tourData.du_khach].map((item) => item["_id"]),
-        ...idDuKhaches,
-      ]);
       axios
         .patch(`https://tour-api-dev.herokuapp.com/tour/${tourData.id}`, {
           du_khach: [
@@ -56,20 +70,16 @@ const PaymentContent = () => {
       .post(`https://tour-api-dev.herokuapp.com/dukhach`, accompanyData)
       .then(({ data }) => patchDuKhachTour(data))
       .catch((err) => console.log(err));
+    alert("Đặt tour thành công");
+    window.location.href = "http://localhost:3000/customer/bookedTour";
   };
 
   //User data
   const userData = {};
   //accompany data
-  const numberGuest =
-    JSON.parse(window.localStorage.getItem("bookTourInfor"))?.number - 1;
-  const accompanyData = [];
-  Array.from({ length: numberGuest }, (item, index) => {
-    accompanyData.push({
-      ho_ten: "",
-      sdt: "",
-    });
-  });
+  const numberGuest = JSON.parse(
+    window.localStorage.getItem("bookTourInfor")
+  )?.number;
 
   return (
     <div className="pagementContent">
@@ -85,8 +95,10 @@ const PaymentContent = () => {
           <AccompanyInfor
             onShowLinkInput={onShowLinkInput}
             setOnShowLink={setOnShowLinkInput}
+            customerData={customerData}
             numberGuest={numberGuest}
-            data={accompanyData}
+            accompanyData={accompanyData}
+            setAccompanyData={setAccompanyData}
           />
         </SwipeableViews>
         <div className="btn--group">

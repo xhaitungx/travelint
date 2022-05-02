@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { TextField } from "@mui/material";
 import "./accompanyInfor.scss";
@@ -6,16 +6,21 @@ const AccompanyInfor = ({
   onShowLinkInput,
   setOnShowLink,
   numberGuest,
-  data,
+  accompanyData,
+  setAccompanyData,
 }) => {
   const handleChangeName = (e) => {
     const index = e.target.dataset.index;
-    data[index].ho_ten = e.target.value;
+    const tempArray = [...accompanyData];
+    tempArray[index].ho_ten = e.target.value;
+    setAccompanyData(tempArray);
   };
 
   const handleChangePhone = (e) => {
     const index = e.target.dataset.index;
-    data[index].sdt = e.target.value;
+    const tempArray = [...accompanyData];
+    tempArray[index].sdt = e.target.value;
+    setAccompanyData(tempArray);
   };
 
   const renderFormAccompany = () => {
@@ -25,6 +30,7 @@ const AccompanyInfor = ({
         <TextField
           type="text"
           label="Họ và tên"
+          value={accompanyData[index]?.ho_ten || ""}
           sx={{ maxWidth: "200px" }}
           onChange={handleChangeName}
           inputProps={{ "data-index": index }}
@@ -33,6 +39,7 @@ const AccompanyInfor = ({
           type="number"
           label="Số điện thoại"
           sx={{ maxWidth: "200px" }}
+          value={accompanyData[index]?.sdt || ""}
           onChange={handleChangePhone}
           inputProps={{ "data-index": index }}
         />

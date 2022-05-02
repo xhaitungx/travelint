@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import { LoginContext } from "../../LoginContext";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
+
 import { getDate, getMonth, getYear } from "date-fns";
 import ButtonCustom from "../../components/buttonCustom/ButtonCustom";
 import { useNavigate } from "react-router-dom";
@@ -12,8 +14,7 @@ import { calendar, numberpeople, location } from "../../assets/svg";
 import "./tourHead.scss";
 const TourHead = ({ tourData }) => {
   const customerID = useContext(LoginContext);
-  const [date, setDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState("");
+
   const [numberGuest, setNumberGuest] = useState(0);
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -23,8 +24,8 @@ const TourHead = ({ tourData }) => {
       id: tourData["_id"],
       img: tourData.hinh[0],
       name: tourData.ten,
-      gia: tourData.gia,
-      date: selectedDate,
+      gia: tourData.gia * numberGuest,
+      date: tourData.khoi_hanh,
       number: numberGuest,
       du_khach: tourData.du_khach,
     };
@@ -33,7 +34,7 @@ const TourHead = ({ tourData }) => {
       id_khach_hang: customerID,
       id_tour: tourData["_id"],
       giam_gia: "10%",
-      thanh_tien: tourData.gia,
+      thanh_tien: tourData.gia * numberGuest,
       phuong_thuc_tt: "Chia kỳ",
       ky_thanh_toan: [],
       trang_thai_duyet: "Chưa duyệt",
@@ -95,7 +96,9 @@ const TourHead = ({ tourData }) => {
       <div className="tour--information">
         <div className="tour--information__lightBox">
           <div className="numberOfTour">
-            <p>3/{tourData.so_cho}</p>
+            <p>
+              {tourData.du_khach?.length || 0}/{tourData.so_cho}
+            </p>
             {<PeopleIcon />}
           </div>
           <MuiFbPhotoGrid
@@ -121,7 +124,7 @@ const TourHead = ({ tourData }) => {
                   <img src={calendar} alt="calendar.svg" />
                   Date
                 </label>
-                <DatePicker
+                {/* <DatePicker
                   dateFormat="dd/MM/yyyy"
                   selected={date}
                   onChange={(date) => {
@@ -137,7 +140,8 @@ const TourHead = ({ tourData }) => {
                   //   (date) => new Date(date.split("/").reverse().join())
                   // )}
                   disabledKeyboardNavigation
-                />
+                /> */}
+                <div>{tourData.khoi_hanh}</div>
               </div>
               <div className="input numberGuest">
                 <label>
@@ -168,7 +172,8 @@ const TourHead = ({ tourData }) => {
                     style={{ textAlign: "center", width: "50px" }}
                   />
 
-                  {numberGuest < parseInt(tourData.so_cho) ? (
+                  {numberGuest <
+                  parseInt(tourData.so_cho - tourData.du_khach?.length || 0) ? (
                     <ButtonCustom
                       nameString="+"
                       style={buttonUpDownStyle}
@@ -198,7 +203,7 @@ const TourHead = ({ tourData }) => {
               ) : (
                 <ButtonCustom
                   type="Submit"
-                  nameString="Chọn ngày và số người tham gia"
+                  nameString="Chọn số người tham gia"
                   variant="contained"
                   style={buttonSubmitStyle}
                   disabled={true}
