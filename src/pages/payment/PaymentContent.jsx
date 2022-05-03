@@ -63,15 +63,20 @@ const PaymentContent = () => {
             ...idDuKhaches,
           ],
         })
-        .then((result) => console.log(result))
+        .then((result) => {
+          alert("Đặt tour thành công");
+        })
         .catch((err) => console.log(err));
     };
+
+    console.log(accompanyData);
     axios
       .post(`https://tour-api-dev.herokuapp.com/dukhach`, accompanyData)
       .then(({ data }) => patchDuKhachTour(data))
       .catch((err) => console.log(err));
-    alert("Đặt tour thành công");
-    window.location.href = "http://localhost:3000/customer/bookedTour";
+
+    window.location.href =
+      "https://happy-mcnulty-9678bb.netlify.app/customer/bookedTour";
   };
 
   //User data
