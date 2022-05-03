@@ -65,6 +65,8 @@ const PaymentContent = () => {
         })
         .then((result) => {
           alert("Đặt tour thành công");
+          window.location.href =
+            "https://happy-mcnulty-9678bb.netlify.app/customer/bookedTour";
         })
         .catch((err) => console.log(err));
     };
@@ -74,9 +76,6 @@ const PaymentContent = () => {
       .post(`https://tour-api-dev.herokuapp.com/dukhach`, accompanyData)
       .then(({ data }) => patchDuKhachTour(data))
       .catch((err) => console.log(err));
-
-    window.location.href =
-      "https://happy-mcnulty-9678bb.netlify.app/customer/bookedTour";
   };
 
   //User data
