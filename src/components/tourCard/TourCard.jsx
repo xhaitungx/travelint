@@ -44,7 +44,11 @@ const TourCard = ({ tourData }) => {
             <h3>{tourData.ten}</h3>
             <p>{tourData.describe}</p>
             <div className="locationBox">
-              <h3>Arizona, USA</h3>
+              <h3>
+                Arizona, USA
+                <br />
+                {tourData.khoi_hanh}
+              </h3>
               <h3>{tourData.gia}đ / person</h3>
             </div>
           </div>
