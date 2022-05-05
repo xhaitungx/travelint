@@ -20,11 +20,24 @@ const TourHead = ({ tourData }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const sumCost = (cost, numberGuest) => {
+      const formatVND = (value) => {
+        value = value.toLocaleString("it-IT", {
+          style: "currency",
+          currency: "VND",
+        });
+        return value.replaceAll("VND", "").trim();
+      };
+
+      const sum = parseInt(cost.replaceAll(".", "")) * numberGuest;
+      return formatVND(sum);
+    };
+
     const infor = {
       id: tourData["_id"],
       img: tourData.hinh[0],
       name: tourData.ten,
-      gia: tourData.gia * numberGuest,
+      gia: sumCost(tourData.gia, numberGuest),
       date: tourData.khoi_hanh,
       number: numberGuest,
       du_khach: tourData.du_khach,
@@ -34,7 +47,7 @@ const TourHead = ({ tourData }) => {
       id_khach_hang: customerID,
       id_tour: tourData["_id"],
       giam_gia: "10%",
-      thanh_tien: tourData.gia * numberGuest,
+      thanh_tien: sumCost(tourData.gia, numberGuest),
       phuong_thuc_tt: "Chia kỳ",
       ky_thanh_toan: [],
       trang_thai_duyet: "Chưa duyệt",
@@ -117,6 +130,7 @@ const TourHead = ({ tourData }) => {
             <img src={location} style={{ width: "24px" }} alt="location.svg" />
             <span>Tokyo, Minato</span>
           </div>
+          <p style={{ marginLeft: "1rem" }}>{tourData.gia} đ</p>
           <div className="booktour--form">
             <div className="input--section">
               <div className="input date">
