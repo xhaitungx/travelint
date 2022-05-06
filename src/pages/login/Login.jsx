@@ -64,13 +64,19 @@ const Login = ({ login }) => {
 
   const createRegisterRequest = (values) => {
     axios
-      .post("https://tour-api-dev.herokuapp.com/khachhang", {
+      .post("https://tour-api-dev.herokuapp.com/taikhoan", {
         username: values.email,
         password: values.password,
       })
-      .then(() => {
-        window.sessionStorage.setItem("customerID", values.email);
-        window.location.href = "/";
+      .then(({ data }) => {
+        axios
+          .post("https://tour-api-dev.herokuapp.com/khachhang", {
+            id_tai_khoan: data,
+          })
+          .then(({ data }) => {
+            window.sessionStorage.setItem("customerID", data._id);
+            window.location.href = "/";
+          });
       })
       .catch((err) => console.log(err));
   };

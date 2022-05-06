@@ -55,6 +55,15 @@ const PaymentContent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const requestPosData = JSON.parse(
+      window.localStorage.getItem("bookTourPostRequestData")
+    );
+
+    axios
+      .post("https://tour-api-dev.herokuapp.com/thanhtoan", requestPosData)
+      .catch((err) => console.log(err));
+
     const patchDuKhachTour = (idDuKhaches) => {
       axios
         .patch(`https://tour-api-dev.herokuapp.com/tour/${tourData.id}`, {
@@ -71,7 +80,6 @@ const PaymentContent = () => {
         .catch((err) => console.log(err));
     };
 
-    console.log(accompanyData);
     axios
       .post(`https://tour-api-dev.herokuapp.com/dukhach`, accompanyData)
       .then(({ data }) => patchDuKhachTour(data))

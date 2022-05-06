@@ -54,10 +54,11 @@ const TourHead = ({ tourData }) => {
     };
 
     if (customerID) {
-      axios
-        .post("https://tour-api-dev.herokuapp.com/thanhtoan", bookTourData)
-        .catch((err) => console.log(err));
 
+      window.localStorage.setItem(
+        "bookTourPostRequestData",
+        JSON.stringify(bookTourData)
+      );
       window.localStorage.setItem("bookTourInfor", JSON.stringify(infor));
       navigate("/payment");
     } else window.location.href = "/login";
