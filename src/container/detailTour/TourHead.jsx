@@ -129,7 +129,7 @@ const TourHead = ({ tourData }) => {
           {/* {tourData.location} */}
           <div className="location">
             <img src={location} style={{ width: "24px" }} alt="location.svg" />
-            <span>Tokyo, Minato</span>
+            <span>Nhật Bản</span>
           </div>
           <p style={{ marginLeft: "1rem" }}>{tourData.gia} đ</p>
           <div className="booktour--form">
